@@ -8,7 +8,7 @@ A small, single-user-per-account notes app. Three services, one repo.
 graph LR
     user([User])
     ui["Frontend<br/>React + Vite<br/>:5173"]
-    api["Backend<br/>FastAPI + SQLAlchemy<br/>:8000"]
+    api["Backend<br/>FastAPI + SQLAlchemy<br/>:8001"]
     db[("PostgreSQL 16<br/>:5432")]
 
     user -- HTTP --> ui
@@ -19,7 +19,7 @@ graph LR
 | Service    | Stack                                              | Port | Role                                        |
 | ---------- | -------------------------------------------------- | ---- | ------------------------------------------- |
 | `db`       | Postgres 16                                        | 5432 | Durable storage                             |
-| `backend`  | Python 3.11, FastAPI, SQLAlchemy 2.0, Alembic, JWT | 8000 | REST API, auth, data access                 |
+| `backend`  | Python 3.11, FastAPI, SQLAlchemy 2.0, Alembic, JWT | 8001 | REST API, auth, data access                 |
 | `frontend` | React 18, Vite, React Router                       | 5173 | SPA; dev server proxies `/api` to `backend` |
 
 All three are orchestrated by `docker-compose.yml`. The frontend talks to the backend through the Vite dev proxy — there is no direct browser → backend call in dev.

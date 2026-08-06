@@ -22,7 +22,7 @@ seed: ## Create demo user + sample notes (username: demo, password: demo1234)
 	docker compose exec backend python -m scripts.seed
 
 login-demo: ## Print a curl command to log in as the demo user
-	@echo "curl -s -X POST http://localhost:8000/api/auth/login -d 'username=demo&password=demo1234' -H 'Content-Type: application/x-www-form-urlencoded'"
+	@echo "curl -s -X POST http://localhost:8001/api/auth/login -d 'username=demo&password=demo1234' -H 'Content-Type: application/x-www-form-urlencoded'"
 
 test: test-backend test-frontend ## Run all tests
 
