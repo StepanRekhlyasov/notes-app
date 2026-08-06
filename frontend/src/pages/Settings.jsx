@@ -96,6 +96,12 @@ export default function Settings() {
           <button type="submit" className="btn btn-danger">{t('settings.deleteAccount')}</button>
         </form>
       </section>
+
+      <section className="settings-card">
+        <h2>{t('settings.telegramConnectTitle')}</h2>
+        <p className="settings-hint">{t('settings.telegramConnectHint')}</p>
+        <button className="btn btn-primary">{t('settings.telegramConnect')}</button>
+      </section>
     </div>
   );
 }

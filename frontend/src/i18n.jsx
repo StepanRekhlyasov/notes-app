@@ -89,6 +89,9 @@ const MESSAGES = {
       confirmPassword: 'Enter your password to confirm',
       deleteAccount: 'Delete account',
       confirmDelete: 'This action cannot be undone. Proceed?',
+      telegramConnectTitle: 'Telegram connect',
+      telegramConnectHint: 'Connect your Telegram account to receive notifications.',
+      telegramConnect: 'Connect',
     },
     shortcuts: {
       title: 'Keyboard shortcuts',
@@ -185,6 +188,9 @@ const MESSAGES = {
       confirmPassword: 'Введите пароль для подтверждения',
       deleteAccount: 'Удалить аккаунт',
       confirmDelete: 'Это действие необратимо. Продолжить?',
+      telegramConnectTitle: 'Подключить Telegram',
+      telegramConnectHint: 'Подключите ваш Telegram аккаунт, чтобы получать уведомления.',
+      telegramConnect: 'Подключить',
     },
     shortcuts: {
       title: 'Горячие клавиши',
