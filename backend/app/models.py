@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from sqlalchemy import JSON, Date, DateTime, ForeignKey, String, Text
+from sqlalchemy import BigInteger, JSON, Date, DateTime, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
@@ -16,6 +16,9 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     notes: Mapped[list["Note"]] = relationship(back_populates="owner", cascade="all, delete-orphan")
+    notification: Mapped["Notification | None"] = relationship(
+        back_populates="user", cascade="all, delete-orphan", uselist=False
+    )
 
 
 class Note(Base):
@@ -41,3 +44,19 @@ class Note(Base):
     )
 
     owner: Mapped[User] = relationship(back_populates="notes")
+
+
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+    )
+    telegram_id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )
+
+    user: Mapped[User] = relationship(back_populates="notification")

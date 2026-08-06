@@ -33,8 +33,10 @@ async function request(path, { method = 'GET', body, form } = {}) {
     const detail = await res.json().catch(() => ({}));
     throw new ApiError(detail.detail || res.statusText, res.status);
   }
-  if (res.status === 204) return null;
-  return res.json();
+  if (res.status === 204 || res.status === 201) return null;
+  const text = await res.text();
+  if (!text) return null;
+  return JSON.parse(text);
 }
 
 function buildQuery(params) {
@@ -73,4 +75,25 @@ export const api = {
     }),
   deleteAccount: (password) =>
     request('/account', { method: 'DELETE', body: { password } }),
+
+  getNotifications: async () => {
+    const headers = {};
+    const token = getToken();
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const res = await fetch(`${BASE}/notifications`, { headers });
+    if (res.status === 401) {
+      clearToken();
+      throw new ApiError('Unauthorized', 401);
+    }
+    if (res.status === 201) {
+      return { connected: true };
+    }
+    if (!res.ok) {
+      const detail = await res.json().catch(() => ({}));
+      throw new ApiError(detail.detail || res.statusText, res.status);
+    }
+    const data = await res.json();
+    return { connected: false, url: data.url };
+  },
+  disconnectNotifications: () => request('/notifications', { method: 'DELETE' }),
 };

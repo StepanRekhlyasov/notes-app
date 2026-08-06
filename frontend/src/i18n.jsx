@@ -92,6 +92,9 @@ const MESSAGES = {
       telegramConnectTitle: 'Telegram connect',
       telegramConnectHint: 'Connect your Telegram account to receive notifications.',
       telegramConnect: 'Connect',
+      telegramDisconnect: 'Disable notifications',
+      telegramLoading: 'Loading…',
+      telegramWaiting: 'Waiting for Telegram…',
     },
     shortcuts: {
       title: 'Keyboard shortcuts',
@@ -191,6 +194,9 @@ const MESSAGES = {
       telegramConnectTitle: 'Подключить Telegram',
       telegramConnectHint: 'Подключите ваш Telegram аккаунт, чтобы получать уведомления.',
       telegramConnect: 'Подключить',
+      telegramDisconnect: 'Отключить оповещения',
+      telegramLoading: 'Загрузка…',
+      telegramWaiting: 'Ожидание Telegram…',
     },
     shortcuts: {
       title: 'Горячие клавиши',

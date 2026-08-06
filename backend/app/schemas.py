@@ -66,3 +66,7 @@ class DeleteAccountIn(BaseModel):
 
 class OkOut(BaseModel):
     ok: bool = True
+
+
+class NotificationLinkOut(BaseModel):
+    url: str

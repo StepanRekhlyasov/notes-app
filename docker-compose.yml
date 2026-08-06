@@ -20,10 +20,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    env_file:
+      - ./backend/.env
     environment:
       DATABASE_URL: postgresql+psycopg2://postgres:postgres@db:5432/notes
       JWT_SECRET: dev-secret-change-me-please-32bytes
       CORS_ORIGINS: http://localhost:5173
+      TELEGRAM_BOT_USERNAME: suboid_bot
     ports:
       - "8001:8001"
     volumes:

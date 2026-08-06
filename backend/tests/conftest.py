@@ -2,6 +2,8 @@ import os
 
 os.environ.setdefault("DATABASE_URL", "sqlite:///:memory:")
 os.environ.setdefault("JWT_SECRET", "test-secret-with-at-least-32-characters")
+# Prevent the Telegram poller from calling the real Bot API during tests.
+os.environ["TELEGRAM_BOT_TOKEN"] = ""
 
 import pytest
 from fastapi.testclient import TestClient
