@@ -32,6 +32,7 @@ class NoteOut(BaseModel):
     content: str
     tags: list[str]
     note_date: date | None
+    notified_at: datetime | None = None
     archived_at: datetime | None
     pinned_at: datetime | None
     created_at: datetime

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import logging
 import re
 from datetime import UTC, datetime
@@ -105,8 +106,6 @@ async def telegram_poll_loop(stop: asyncio.Event) -> None:
             raise
         except Exception:
             logger.exception("Telegram poller error")
-        try:
+        with contextlib.suppress(TimeoutError):
             await asyncio.wait_for(stop.wait(), timeout=POLL_INTERVAL_SEC)
-        except TimeoutError:
-            pass
     logger.info("Telegram poller stopped")

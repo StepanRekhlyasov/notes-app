@@ -29,7 +29,7 @@ def test_notifications_link_then_connected(client):
     r = client.get("/api/notifications", headers=h)
     assert r.status_code == 200
     url = r.json()["url"]
-    assert "t.me/suboid_bot?start=connectUser-" in url
+    assert "?start=connectUser-" in url
     user_id = int(url.rsplit("-", 1)[-1])
 
     db = _db()

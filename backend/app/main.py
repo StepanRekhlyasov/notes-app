@@ -1,10 +1,12 @@
 import asyncio
+import contextlib
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
+from .notify_worker import notify_worker_loop
 from .routers import account as account_router
 from .routers import auth as auth_router
 from .routers import notes as notes_router
@@ -16,19 +18,19 @@ from .telegram_poller import telegram_poll_loop
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     stop = asyncio.Event()
-    task: asyncio.Task | None = None
+    tasks: list[asyncio.Task] = []
     if (settings.telegram_bot_token or "").strip():
-        task = asyncio.create_task(telegram_poll_loop(stop))
+        tasks.append(asyncio.create_task(telegram_poll_loop(stop)))
+        tasks.append(asyncio.create_task(notify_worker_loop(stop)))
     try:
         yield
     finally:
         stop.set()
-        if task is not None:
+        for task in tasks:
             task.cancel()
-            try:
+        for task in tasks:
+            with contextlib.suppress(asyncio.CancelledError):
                 await task
-            except asyncio.CancelledError:
-                pass
 
 
 app = FastAPI(title="Notes API", version="0.1.0", lifespan=lifespan)
